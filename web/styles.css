@@ -53,6 +53,25 @@ body {
   z-index: 1200;
 }
 
+.legend.hidden { display: none; }
+
+.legend-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(2,6,23,0.15);
+  z-index: 1300;
+  display: none; /* visível apenas no mobile */
+}
+.legend-toggle:focus { outline: 2px solid #c7dcff; outline-offset: 2px; }
+
 .legend .dot {
   display: inline-block;
   width: 10px;
@@ -84,3 +103,31 @@ body {
 .app-footer a { color: var(--brand); text-decoration: none; }
 .app-footer a:hover { text-decoration: underline; }
 .app-footer .subtitle { margin-top: 4px; }
+
+/* Responsivo (mobile-first) */
+@media (max-width: 768px) {
+  .app-header { padding: 12px 0; }
+  .app-header h1 { font-size: 16px; line-height: 1.2; }
+  .container { padding: 0 12px; }
+  #map { height: 62vh; }
+  .legend {
+    top: 56px;
+    right: 12px;
+    bottom: auto;
+    left: auto;
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+  .legend .dot { width: 9px; height: 9px; }
+  .popup h3 { font-size: 15px; }
+  .popup .history { font-size: 12px; }
+  .app-footer { font-size: 12px; }
+  .legend-toggle { display: inline-block; top: 12px; right: 12px; bottom: auto; }
+}
+
+@media (max-width: 480px) {
+  .app-header h1 { font-size: 14px; }
+  #map { height: 60vh; }
+  .legend { font-size: 12px; }
+  .legend .dot { width: 8px; height: 8px; }
+}

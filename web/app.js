@@ -108,6 +108,20 @@ async function main() {
       marker.bindPopup(renderPopup(p));
       marker.addTo(map);
     });
+
+  // Legend toggle (mobile)
+  const btn = document.getElementById('legend-toggle');
+  const legend = document.getElementById('legend');
+  if (btn && legend) {
+    let hidden = false;
+    const update = () => {
+      legend.classList.toggle('hidden', hidden);
+      btn.setAttribute('aria-expanded', String(!hidden));
+      btn.textContent = hidden ? 'Mostrar legenda' : 'Ocultar legenda';
+    };
+    btn.addEventListener('click', () => { hidden = !hidden; update(); });
+    update();
+  }
 }
 
 main();
