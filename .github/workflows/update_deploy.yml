@@ -16,6 +16,12 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,14 +36,17 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r etl/requirements.txt
 
-      - name: Run ETL to refresh data
+      - name: Run ETL to refresh data (limit=10)
+        continue-on-error: true
         run: |
-          python etl/fetch_sema.py --limit 5 --timeout 90
+          python etl/fetch_sema.py --limit 10 --timeout 90 || echo "ETL failed; keeping existing points.json"
 
       - name: Prepare site artifact
         run: |
           mkdir -p web/data
           cp -f data/points.json web/data/points.json
+          ls -lah web
+          ls -lah web/data
 
       - name: Commit data changes (if any)
         run: |
@@ -59,4 +68,5 @@ jobs:
           path: web
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4

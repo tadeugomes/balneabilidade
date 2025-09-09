@@ -24,6 +24,7 @@ from typing import Dict, List, Optional, Tuple
 
 import requests
 from bs4 import BeautifulSoup
+import traceback
 
 try:
     import pdfplumber  # type: ignore
@@ -62,13 +63,37 @@ def ensure_dirs():
     os.makedirs(RAW_DIR, exist_ok=True)
 
 
+def _parse_date_any(s: str) -> Optional[datetime]:
+    """Extrai uma data (prioriza dd/mm/aaaa ou dd_mm_aaaa) de um texto/URL e retorna datetime.
+    Retorna None se não encontrar.
+    """
+    if not s:
+        return None
+    # dd[_-./]mm[_-./]yyyy
+    m = re.search(r'(\d{1,2})[_.\-/](\d{1,2})[_.\-/](\d{2,4})', s)
+    if m:
+        d, mth, y = m.groups()
+        try:
+            yy = int(y)
+            if yy < 100:
+                yy += 2000
+            return datetime(year=yy, month=int(mth), day=int(d))
+        except Exception:
+            return None
+    return None
+
+
 def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]:
     """Coleta os últimos itens de laudos do site e retorna [{title, url}]."""
-    r = requests.get(LAUDOS_URL, timeout=timeout, headers={
-        'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-    })
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, 'html.parser')
+    try:
+        r = requests.get(LAUDOS_URL, timeout=timeout, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
+        })
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, 'html.parser')
+    except requests.RequestException as e:
+        print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
+        return []
 
     items: List[Dict[str, str]] = []
     # Heurística: buscar links que contenham 'Laudo' e/ou que apontem para PDFs
@@ -77,9 +102,12 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]
         text = a.get_text(strip=True)
         if not href:
             continue
-        if 'pdf' in href.lower() or 'Laudo' in text or 'laudo' in text:
+        if ('pdf' in href.lower()) or ('laudo' in text.lower()):
             url = href if href.startswith('http') else requests.compat.urljoin(LAUDOS_URL, href)
-            items.append({'title': text, 'url': url})
+            # extrai data de href ou texto
+            dt = _parse_date_any(href) or _parse_date_any(text)
+            ts = int(dt.timestamp()) if dt else 0
+            items.append({'title': text, 'url': url, 'ts': ts})
 
     # Remover duplicados conservando ordem
     seen = set()
@@ -91,9 +119,21 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]
         seen.add(key)
         unique.append(it)
 
-    # Heurística simples: priorizar PDFs
-    unique.sort(key=lambda x: (0 if x['url'].lower().endswith('.pdf') else 1, -len(x['title'])))
-    return unique[:limit]
+    # Ordena: prioriza PDFs e com data mais recente (ts maior)
+    def sort_key(x: Dict[str, str]):
+        is_pdf = 0 if x['url'].lower().endswith('.pdf') else 1
+        ts = int(x.get('ts') or 0)
+        # também prioriza se contiver 'balneabilidade' no caminho
+        name_bias = 0 if ('balneabilidade' in x['url'].lower()) else 1
+        return (is_pdf, name_bias, -ts, -len(x.get('title') or ''))
+
+    unique.sort(key=sort_key)
+    top = unique[:limit]
+    # Log curto dos candidatos (para visibilidade no Actions)
+    print('Indexados (top):')
+    for i, it in enumerate(top, 1):
+        print(f"  {i:02d}. ts={it.get('ts',0)} url={it['url']}")
+    return top
 
 
 def download_pdf(url: str, timeout: int = 60) -> str:
@@ -410,8 +450,16 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
         if not url.lower().endswith('.pdf'):
             # Pular itens não-PDF; em alguns casos a página do laudo tem link para PDF interno
             continue
-        pdf_path = download_pdf(url, timeout=timeout)
-        rows = parse_pdf_text(pdf_path)
+        try:
+            pdf_path = download_pdf(url, timeout=timeout)
+            rows = parse_pdf_text(pdf_path)
+        except requests.RequestException as e:
+            print(f'WARN: falha ao baixar PDF {url}: {e}')
+            continue
+        except Exception as e:
+            print(f'WARN: erro ao processar PDF {url}: {e}')
+            traceback.print_exc()
+            continue
         # Anexa origem a cada linha para rastreio
         for r in rows:
             r['source_url'] = url
@@ -426,6 +474,7 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
         source_url = web_source_url
     else:
         source_url = items[0]['url'] if items else LAUDOS_URL
+    print(f"Fonte consolidada: {source_url}")
     agg = consolidate(all_rows, source_url)
 
     # Anexa geocódigos
@@ -433,11 +482,41 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
     attach_geocodes(agg, geos)
 
     # Emite JSON
+    def _max_date_from_points(path: str) -> Optional[str]:
+        try:
+            if not os.path.exists(path):
+                return None
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            dates = []
+            for p in data:
+                d = (p.get('latest') or {}).get('date')
+                if d:
+                    dates.append(d)
+            return max(dates) if dates else None
+        except Exception:
+            return None
+
     if agg:
         points = to_points_json(agg)
-        with open(POINTS_JSON, 'w', encoding='utf-8') as f:
-            json.dump(points, f, ensure_ascii=False, indent=2)
-        print(f'Gerado: {POINTS_JSON} (itens={len(points)})')
+        # Decide se os dados são realmente mais novos do que o atual points.json
+        new_latest = None
+        try:
+            new_dates = [ (p.get('latest') or {}).get('date') for p in points ]
+            new_dates = [d for d in new_dates if d]
+            new_latest = max(new_dates) if new_dates else None
+        except Exception:
+            pass
+
+        cur_latest = _max_date_from_points(POINTS_JSON)
+
+        print(f"Comparação de versões: atual={cur_latest} novo={new_latest}")
+        if cur_latest and new_latest and new_latest <= cur_latest:
+            print('Nenhuma atualização mais recente. Mantendo points.json atual.')
+        else:
+            with open(POINTS_JSON, 'w', encoding='utf-8') as f:
+                json.dump(points, f, ensure_ascii=False, indent=2)
+            print(f'Gerado: {POINTS_JSON} (itens={len(points)})')
     else:
         print('Sem pontos consolidados – mantendo points.json atual (se existir).')
 
