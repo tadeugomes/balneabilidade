@@ -19,16 +19,17 @@
       </div>
     </header>
 
-    <div id="map" role="region" aria-label="Mapa de balneabilidade"></div>
-    <div class="legend" id="legend">
-      <strong>Status</strong>
-      <div><span class="dot dot-green"></span> PRÓPRIO</div>
-      <div><span class="dot dot-red"></span> IMPRÓPRIO</div>
-      <div><span class="dot dot-gray"></span> DESCONHECIDO</div>
+    <div id="map" role="region" aria-label="Mapa de balneabilidade">
+      <div class="legend" id="legend">
+        <strong>Status</strong>
+        <div><span class="dot dot-green"></span> PRÓPRIO</div>
+        <div><span class="dot dot-red"></span> IMPRÓPRIO</div>
+        <div><span class="dot dot-gray"></span> DESCONHECIDO</div>
+      </div>
+      <button id="legend-toggle" class="legend-toggle" aria-controls="legend" aria-expanded="true" title="Mostrar/ocultar legenda">
+        Ocultar legenda
+      </button>
     </div>
-    <button id="legend-toggle" class="legend-toggle" aria-controls="legend" aria-expanded="true" title="Mostrar/ocultar legenda">
-      Ocultar legenda
-    </button>
 
     <footer class="app-footer">
       <div class="container">

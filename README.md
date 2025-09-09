@@ -1,4 +1,4 @@
-# Mapa de Balneabilidade – Maranhão (protótipo)
+# Mapa de Balneabilidade – Maranhão
 
 Protótipo de um mapa em Leaflet para exibir o status de balneabilidade dos pontos monitorados (SEMA/MA), com esqueleto de ETL para baixar e extrair dados dos PDFs.
 
@@ -49,13 +49,7 @@ O mapa carrega `data/points.json`. Já existe um exemplo (P19) para validar a vi
 - `data/points.json`: dados (exemplo e saída do ETL)
 - `etl/fetch_sema.py`: esqueleto do coletor e parser
 
-## Próximos passos sugeridos
 
-1. Completar o parser de PDF conforme o layout real (ajustar regex e extração de tabela por página).  
-2. Preencher `data/stations_geocoded.csv` com coordenadas oficiais dos pontos (uma só vez).  
-3. Automatizar atualização semanal (GitHub Actions/Cron) para baixar novo laudo e atualizar `data/points.json`.  
-4. Adicionar camada de filtros (cidade/praia/status) e legenda mais rica.  
-5. Publicar via GitHub Pages ou Netlify (direto da pasta raiz).
 
 ## Deploy automático (GitHub Actions + Pages)
 
