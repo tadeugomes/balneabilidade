@@ -1,0 +1,20 @@
+# Python / venv
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+
+# Data
+data/raw/
+data/*.pdf
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

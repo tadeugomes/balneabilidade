@@ -1,0 +1,420 @@
+[
+  {
+    "code": "P01",
+    "beach": "Praia Ponta d’Areia",
+    "reference": "Ao lado do Espigão Ponta D’Areia",
+    "city": "São Luís",
+    "lat": -2.5003,
+    "lng": -44.319806,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "IMPRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "IMPRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P02",
+    "beach": "Praia Ponta d’Areia",
+    "reference": "Em frente à rampa, lado do Praia Mar Hotel",
+    "city": "São Luís",
+    "lat": -2.497611,
+    "lng": -44.312306,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "IMPRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "IMPRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P03",
+    "beach": "Praça do Sol",
+    "reference": "Centro de Atendimento ao Banhista",
+    "city": "São Luís",
+    "lat": -2.494306,
+    "lng": -44.307806,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P04",
+    "beach": "Praia Ponta do Farol",
+    "reference": "Em frente ao Farol e Forte de São Marcos",
+    "city": "São Luís",
+    "lat": -2.486389,
+    "lng": -44.302,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P05",
+    "beach": "Praia de São Marcos",
+    "reference": "Praça do Pescador / Barraca do Chef",
+    "city": "São Luís",
+    "lat": -2.486694,
+    "lng": -44.292306,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "IMPRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "IMPRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P06",
+    "beach": "Praia de São Marcos",
+    "reference": "Posto Guarda Vidas – Bombeiros",
+    "city": "São Luís",
+    "lat": -2.486806,
+    "lng": -44.284889,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P07",
+    "beach": "Praia de São Marcos",
+    "reference": "Prédio verde com heliporto",
+    "city": "São Luís",
+    "lat": -2.4865,
+    "lng": -44.275611,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P08",
+    "beach": "Praia de São Marcos",
+    "reference": "Banca de Jornal – Praça de Alimentação",
+    "city": "São Luís",
+    "lat": -2.483306,
+    "lng": -44.267194,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P09",
+    "beach": "Praia do Calhau",
+    "reference": "Estação Elevatória de Esgoto 2.2 / CAEMA",
+    "city": "São Luís",
+    "lat": -2.481306,
+    "lng": -44.261194,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P10",
+    "beach": "Praia do Calhau",
+    "reference": "Rua Altamira / Pousada Vela Mar",
+    "city": "São Luís",
+    "lat": -2.481583,
+    "lng": -44.2535,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P11",
+    "beach": "Praia do Calhau",
+    "reference": "Av. Copacabana / Pousada Suíça",
+    "city": "São Luís",
+    "lat": -2.4815,
+    "lng": -44.238778,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P12",
+    "beach": "Praia do Olho d’Água",
+    "reference": "Rua São Geraldo",
+    "city": "São Luís",
+    "lat": -2.4795,
+    "lng": -44.238611,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P13",
+    "beach": "Praia do Olho d’Água",
+    "reference": "Elevatória Iemanjá II",
+    "city": "São Luís",
+    "lat": -2.476317,
+    "lng": -44.223853,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P14",
+    "beach": "Praia do Olho d’Água",
+    "reference": "Casa com pirâmides no teto",
+    "city": "São Luís",
+    "lat": -2.475,
+    "lng": -44.220806,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P15",
+    "beach": "Praia do Meio",
+    "reference": "Próximo ao Kacthus Bar e Restaurante",
+    "city": "São José de Ribamar",
+    "lat": -2.470389,
+    "lng": -44.211611,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P16",
+    "beach": "Praia do Meio",
+    "reference": "Bar e Restaurante Capiau 2",
+    "city": "São José de Ribamar",
+    "lat": -2.468111,
+    "lng": -44.206306,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P17",
+    "beach": "Praia do Araçagy",
+    "reference": "Rampa principal de acesso à praia",
+    "city": "São José de Ribamar",
+    "lat": -2.464111,
+    "lng": -44.198611,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P18",
+    "beach": "Praia do Araçagy",
+    "reference": "Bar da Atalaia",
+    "city": "São José de Ribamar",
+    "lat": -2.463306,
+    "lng": -44.191389,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P19",
+    "beach": "Praia do Araçagy",
+    "reference": "Bar e Restaurante Rainha",
+    "city": "Paço do Lumiar",
+    "lat": -2.459306,
+    "lng": -44.175611,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P20",
+    "beach": "Praia Olho de Porco",
+    "reference": "Las Vegas Bar e Restaurante",
+    "city": "Paço do Lumiar",
+    "lat": -2.459306,
+    "lng": -44.175611,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P21",
+    "beach": "Praia Olho de Porco",
+    "reference": "Última barraca antes da foz do igarapé",
+    "city": "Raposa",
+    "lat": -2.456306,
+    "lng": -44.172833,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  },
+  {
+    "code": "P22",
+    "beach": "Praia do Mangue Seco",
+    "reference": "Biblioteca do Caranguejo / Barracas Val e Pedro",
+    "city": "Raposa",
+    "lat": -2.450111,
+    "lng": -44.163111,
+    "latest": {
+      "date": "2025-08-21",
+      "status": "PRÓPRIO"
+    },
+    "history": [
+      {
+        "date": "2025-08-21",
+        "status": "PRÓPRIO"
+      }
+    ],
+    "source_laudo": "https://www.sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_21_08_2025.pdf"
+  }
+]
