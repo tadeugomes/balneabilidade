@@ -40,6 +40,13 @@ POINTS_JSON = os.path.join(DATA_DIR, 'points.json')
 LAUDOS_URL = 'https://www.sema.ma.gov.br/laudos-de-balneabilidade'
 
 
+def _insecure_ssl() -> bool:
+    # Permite contornar ambientes sem cadeia de certificados correta
+    # Use apenas para testes locais. Habilite via CLI --insecure ou env SEMA_INSECURE_SSL=1
+    env = os.getenv('SEMA_INSECURE_SSL', '').strip()
+    return env in ('1', 'true', 'TRUE', 'yes', 'on')
+
+
 @dataclass
 class Sample:
     date: str
@@ -83,10 +90,10 @@ def _parse_date_any(s: str) -> Optional[datetime]:
     return None
 
 
-def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]:
+def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False) -> List[Dict[str, str]]:
     """Coleta os últimos itens de laudos do site e retorna [{title, url}]."""
     try:
-        r = requests.get(LAUDOS_URL, timeout=timeout, headers={
+        r = requests.get(LAUDOS_URL, timeout=timeout, verify=not insecure, headers={
             'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
         })
         r.raise_for_status()
@@ -96,18 +103,38 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]
         return []
 
     items: List[Dict[str, str]] = []
-    # Heurística: buscar links que contenham 'Laudo' e/ou que apontem para PDFs
+    # Heurística: buscar links para PDF ou páginas cujo contexto cite Laudo/Balneabilidade
     for a in soup.find_all('a', href=True):
-        href = a['href']
-        text = a.get_text(strip=True)
+        href = a['href'] or ''
         if not href:
             continue
-        if ('pdf' in href.lower()) or ('laudo' in text.lower()):
-            url = href if href.startswith('http') else requests.compat.urljoin(LAUDOS_URL, href)
-            # extrai data de href ou texto
-            dt = _parse_date_any(href) or _parse_date_any(text)
+        text = a.get_text(" ", strip=True) or ''
+        # Coleta um pouco de contexto (pai imediato e avô) para achar datas/palavras-chave
+        ctx_parts: List[str] = [text]
+        try:
+            parent = a.parent
+            if parent is not None:
+                ctx_parts.append(parent.get_text(" ", strip=True) or '')
+                gp = getattr(parent, 'parent', None)
+                if gp is not None and hasattr(gp, 'get_text'):
+                    ctx_parts.append(gp.get_text(" ", strip=True) or '')
+        except Exception:
+            pass
+        context_text = ' '.join([p for p in ctx_parts if p])
+
+        href_abs = href if href.startswith('http') else requests.compat.urljoin(LAUDOS_URL, href)
+        h = href.lower()
+        t = (text or '').lower()
+        c = (context_text or '').lower()
+
+        looks_pdf = h.endswith('.pdf')
+        mentions_laudo = ('laudo' in t) or ('balneabilidade' in t) or ('laudo' in c) or ('balneabilidade' in c)
+
+        if looks_pdf or mentions_laudo:
+            # extrai data de href, texto ou contexto (ex.: "período de ... a 15/09/2025")
+            dt = _parse_date_any(href) or _parse_date_any(text) or _parse_date_any(context_text)
             ts = int(dt.timestamp()) if dt else 0
-            items.append({'title': text, 'url': url, 'ts': ts})
+            items.append({'title': text, 'url': href_abs, 'ts': ts})
 
     # Remover duplicados conservando ordem
     seen = set()
@@ -121,11 +148,12 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]
 
     # Ordena: prioriza PDFs e com data mais recente (ts maior)
     def sort_key(x: Dict[str, str]):
-        is_pdf = 0 if x['url'].lower().endswith('.pdf') else 1
         ts = int(x.get('ts') or 0)
+        is_pdf = 0 if x['url'].lower().endswith('.pdf') else 1
         # também prioriza se contiver 'balneabilidade' no caminho
         name_bias = 0 if ('balneabilidade' in x['url'].lower()) else 1
-        return (is_pdf, name_bias, -ts, -len(x.get('title') or ''))
+        # Prioridade: data mais recente primeiro; depois PDF; depois nome
+        return (-ts, is_pdf, name_bias, -len(x.get('title') or ''))
 
     unique.sort(key=sort_key)
     top = unique[:limit]
@@ -136,15 +164,15 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30) -> List[Dict[str, str]]
     return top
 
 
-def download_pdf(url: str, timeout: int = 60) -> str:
+def download_pdf(url: str, timeout: int = 60, force: bool = False, insecure: bool = False) -> str:
     """Baixa um PDF para data/raw e devolve o caminho local."""
     name = re.sub(r'[^A-Za-z0-9._-]+', '_', os.path.basename(url))
     if not name.lower().endswith('.pdf'):
         name += '.pdf'
     path = os.path.join(RAW_DIR, name)
-    if os.path.exists(path) and os.path.getsize(path) > 0:
+    if not force and os.path.exists(path) and os.path.getsize(path) > 0:
         return path
-    with requests.get(url, timeout=timeout, stream=True, headers={
+    with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers={
         'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
     }) as r:
         r.raise_for_status()
@@ -153,6 +181,37 @@ def download_pdf(url: str, timeout: int = 60) -> str:
                 if chunk:
                     f.write(chunk)
     return path
+
+
+def resolve_pdf_from_page(url: str, timeout: int = 30, insecure: bool = False) -> Optional[str]:
+    """Dado um URL de página (não-PDF), tenta encontrar um link para PDF dentro dela.
+    Retorna o URL absoluto do PDF encontrado, priorizando caminhos que contenham
+    'balneabilidade'. Caso não encontre, devolve None.
+    """
+    try:
+        r = requests.get(url, timeout=timeout, verify=not insecure, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
+        })
+        r.raise_for_status()
+    except requests.RequestException as e:
+        print(f'WARN: falha ao abrir página de laudo {url}: {e}')
+        return None
+
+    soup = BeautifulSoup(r.text, 'html.parser')
+    cand: List[str] = []
+    for a in soup.find_all('a', href=True):
+        href = a['href'] or ''
+        if not href:
+            continue
+        if href.lower().endswith('.pdf'):
+            abs_url = href if href.startswith('http') else requests.compat.urljoin(url, href)
+            cand.append(abs_url)
+
+    if not cand:
+        return None
+    # Prioriza PDFs que tenham 'balneabilidade' no nome
+    cand.sort(key=lambda u: (0 if 'balneabilidade' in u.lower() else 1, len(u)))
+    return cand[0]
 
 
 def parse_pdf_text(pdf_path: str) -> List[Dict[str, str]]:
@@ -429,14 +488,16 @@ def write_stations_index_csv(agg: Dict[str, Station], path: str):
             f.write(f'{s.code},"{b}","{r}","{c}",{lat},{lng}\n')
 
 
-def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_source_url: Optional[str] = None):
+def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_source_url: Optional[str] = None, refresh_raw: bool = False, insecure: Optional[bool] = None):
     ensure_dirs()
     items: List[Dict[str, str]] = []
     if from_file:
         # Usa um PDF local em vez de baixar
         items = [{'title': os.path.basename(from_file), 'url': f'file://{from_file}'}]
     else:
-        items = fetch_laudo_index(limit=limit, timeout=timeout)
+        # Define inseguro via CLI ou variável de ambiente
+        insecure_flag = _insecure_ssl() if insecure is None else insecure
+        items = fetch_laudo_index(limit=limit, timeout=timeout, insecure=insecure_flag)
     all_rows: List[Dict[str, str]] = []
     for it in items:
         url = it['url']
@@ -448,10 +509,15 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
             all_rows.extend(rows)
             continue
         if not url.lower().endswith('.pdf'):
-            # Pular itens não-PDF; em alguns casos a página do laudo tem link para PDF interno
-            continue
+            # Alguns laudos são páginas; tenta localizar PDF dentro da página
+            resolved = resolve_pdf_from_page(url, timeout=timeout, insecure=insecure_flag)
+            if not resolved:
+                # Sem PDF interno, pula
+                print(f'INFO: sem PDF encontrado na página {url} — ignorando')
+                continue
+            url = resolved
         try:
-            pdf_path = download_pdf(url, timeout=timeout)
+            pdf_path = download_pdf(url, timeout=timeout, force=refresh_raw, insecure=insecure_flag)
             rows = parse_pdf_text(pdf_path)
         except requests.RequestException as e:
             print(f'WARN: falha ao baixar PDF {url}: {e}')
@@ -499,7 +565,7 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
 
     if agg:
         points = to_points_json(agg)
-        # Decide se os dados são realmente mais novos do que o atual points.json
+        # Mantém log informativo, mas sempre escreve para refletir mudanças de conteúdo
         new_latest = None
         try:
             new_dates = [ (p.get('latest') or {}).get('date') for p in points ]
@@ -509,14 +575,11 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
             pass
 
         cur_latest = _max_date_from_points(POINTS_JSON)
+        print(f"Comparação de versões (informativo): atual={cur_latest} novo={new_latest}")
 
-        print(f"Comparação de versões: atual={cur_latest} novo={new_latest}")
-        if cur_latest and new_latest and new_latest <= cur_latest:
-            print('Nenhuma atualização mais recente. Mantendo points.json atual.')
-        else:
-            with open(POINTS_JSON, 'w', encoding='utf-8') as f:
-                json.dump(points, f, ensure_ascii=False, indent=2)
-            print(f'Gerado: {POINTS_JSON} (itens={len(points)})')
+        with open(POINTS_JSON, 'w', encoding='utf-8') as f:
+            json.dump(points, f, ensure_ascii=False, indent=2)
+        print(f'Gerado: {POINTS_JSON} (itens={len(points)})')
     else:
         print('Sem pontos consolidados – mantendo points.json atual (se existir).')
 
@@ -532,5 +595,7 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=int, default=60, help='Timeout de rede em segundos')
     parser.add_argument('--from-file', type=str, default=None, help='Caminho para PDF local (pula download)')
     parser.add_argument('--web-source-url', type=str, default=None, help='URL pública do laudo (para Fonte: SEMA/MA)')
+    parser.add_argument('--refresh-raw', action='store_true', help='Força re-download dos PDFs em data/raw/')
+    parser.add_argument('--insecure', action='store_true', help='Ignora verificação SSL (apenas testes locais)')
     args = parser.parse_args()
-    run(limit=args.limit, timeout=args.timeout, from_file=args.from_file, web_source_url=args.web_source_url)
+    run(limit=args.limit, timeout=args.timeout, from_file=args.from_file, web_source_url=args.web_source_url, refresh_raw=args.refresh_raw, insecure=args.insecure)
