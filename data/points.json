@@ -12,7 +12,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "IMPRÓPRIO"
       },
       {
@@ -47,7 +55,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "IMPRÓPRIO"
       },
       {
@@ -78,8 +94,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -113,8 +137,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -148,7 +180,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "IMPRÓPRIO"
       },
       {
@@ -183,7 +223,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "IMPRÓPRIO"
       },
       {
@@ -218,7 +266,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "IMPRÓPRIO"
       },
       {
@@ -253,8 +309,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -288,7 +352,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "PRÓPRIO"
       },
       {
@@ -323,8 +395,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -358,8 +438,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -393,8 +481,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -428,7 +524,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "PRÓPRIO"
       },
       {
@@ -463,8 +567,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -498,8 +610,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -533,8 +653,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -568,7 +696,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "PRÓPRIO"
       },
       {
@@ -603,8 +739,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -638,8 +782,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
@@ -673,7 +825,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "PRÓPRIO"
       },
       {
@@ -708,7 +868,15 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
         "status": "PRÓPRIO"
       },
       {
@@ -743,8 +911,16 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2022-11-03",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-08-25",
+        "status": "PRÓPRIO"
       },
       {
         "date": "2025-09-01",
