@@ -38,6 +38,8 @@ jobs:
 
       - name: Run ETL to refresh data (limit=10)
         continue-on-error: true
+        env:
+          SEMA_INSECURE_SSL: "1"
         run: |
           python etl/fetch_sema.py --limit 10 --timeout 90 || echo "ETL failed; keeping existing points.json"
 

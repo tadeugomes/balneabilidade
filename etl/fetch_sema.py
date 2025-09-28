@@ -98,6 +98,12 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False)
         })
         r.raise_for_status()
         soup = BeautifulSoup(r.text, 'html.parser')
+    except requests.exceptions.SSLError as e:
+        if not insecure:
+            print('WARN: SSL inválido no índice da SEMA; tentando novamente sem verificação (confie antes de usar).')
+            return fetch_laudo_index(limit=limit, timeout=timeout, insecure=True)
+        print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
+        return []
     except requests.RequestException as e:
         print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
         return []
@@ -172,14 +178,20 @@ def download_pdf(url: str, timeout: int = 60, force: bool = False, insecure: boo
     path = os.path.join(RAW_DIR, name)
     if not force and os.path.exists(path) and os.path.getsize(path) > 0:
         return path
-    with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers={
-        'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-    }) as r:
-        r.raise_for_status()
-        with open(path, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
+    try:
+        with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
+        }) as r:
+            r.raise_for_status()
+            with open(path, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+    except requests.exceptions.SSLError as e:
+        if not insecure:
+            print(f'WARN: SSL inválido ao baixar {url}; nova tentativa sem verificação (confira a procedência).')
+            return download_pdf(url, timeout=timeout, force=force, insecure=True)
+        raise
     return path
 
 
@@ -193,6 +205,12 @@ def resolve_pdf_from_page(url: str, timeout: int = 30, insecure: bool = False) -
             'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
         })
         r.raise_for_status()
+    except requests.exceptions.SSLError as e:
+        if not insecure:
+            print(f'WARN: SSL inválido na página {url}; tentando novamente sem verificação (confie antes de prosseguir).')
+            return resolve_pdf_from_page(url, timeout=timeout, insecure=True)
+        print(f'WARN: falha ao abrir página de laudo {url}: {e}')
+        return None
     except requests.RequestException as e:
         print(f'WARN: falha ao abrir página de laudo {url}: {e}')
         return None
@@ -596,6 +614,6 @@ if __name__ == '__main__':
     parser.add_argument('--from-file', type=str, default=None, help='Caminho para PDF local (pula download)')
     parser.add_argument('--web-source-url', type=str, default=None, help='URL pública do laudo (para Fonte: SEMA/MA)')
     parser.add_argument('--refresh-raw', action='store_true', help='Força re-download dos PDFs em data/raw/')
-    parser.add_argument('--insecure', action='store_true', help='Ignora verificação SSL (apenas testes locais)')
+    parser.add_argument('--insecure', action='store_true', default=None, help='Ignora verificação SSL (apenas testes locais)')
     args = parser.parse_args()
     run(limit=args.limit, timeout=args.timeout, from_file=args.from_file, web_source_url=args.web_source_url, refresh_raw=args.refresh_raw, insecure=args.insecure)
