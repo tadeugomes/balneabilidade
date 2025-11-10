@@ -12,6 +12,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "IMPRÓPRIO"
       }
@@ -30,6 +54,30 @@
       "status": "IMPRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "IMPRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "IMPRÓPRIO"
@@ -50,6 +98,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "IMPRÓPRIO"
       }
@@ -68,6 +140,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -88,6 +184,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -106,6 +226,30 @@
       "status": "IMPRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "IMPRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "IMPRÓPRIO"
@@ -126,6 +270,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "IMPRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "IMPRÓPRIO"
       }
@@ -144,6 +312,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "IMPRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -164,6 +356,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -182,6 +398,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -202,6 +442,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -220,6 +484,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -240,6 +528,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -258,6 +570,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -278,6 +614,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -296,6 +656,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -316,6 +700,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -334,6 +742,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -354,6 +786,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -372,6 +828,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
@@ -392,6 +872,30 @@
     },
     "history": [
       {
+        "date": "2022-10-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
+      {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
       }
@@ -410,6 +914,30 @@
       "status": "PRÓPRIO"
     },
     "history": [
+      {
+        "date": "2022-10-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2022-11-03",
+        "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2025-10-06",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-13",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-20",
+        "status": "PRÓPRIO"
+      },
+      {
+        "date": "2025-10-28",
+        "status": "PRÓPRIO"
+      },
       {
         "date": "2025-11-03",
         "status": "PRÓPRIO"
