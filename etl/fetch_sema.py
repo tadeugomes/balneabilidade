@@ -17,6 +17,7 @@ import argparse
 import json
 import os
 import re
+import time
 from dataclasses import dataclass, field
 import unicodedata
 from datetime import datetime
@@ -90,22 +91,31 @@ def _parse_date_any(s: str) -> Optional[datetime]:
     return None
 
 
-def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False) -> List[Dict[str, str]]:
+def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False, max_retries: int = 3) -> List[Dict[str, str]]:
     """Coleta os últimos itens de laudos do site e retorna [{title, url}]."""
-    try:
-        r = requests.get(LAUDOS_URL, timeout=timeout, verify=not insecure, headers={
-            'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-        })
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, 'html.parser')
-    except requests.exceptions.SSLError as e:
-        if not insecure:
-            print('WARN: SSL inválido no índice da SEMA; tentando novamente sem verificação (confie antes de usar).')
-            return fetch_laudo_index(limit=limit, timeout=timeout, insecure=True)
-        print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
-        return []
-    except requests.RequestException as e:
-        print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
+    for attempt in range(max_retries):
+        try:
+            r = requests.get(LAUDOS_URL, timeout=timeout, verify=not insecure, headers={
+                'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
+            })
+            r.raise_for_status()
+            soup = BeautifulSoup(r.text, 'html.parser')
+            break
+        except requests.exceptions.SSLError as e:
+            if not insecure:
+                print('WARN: SSL inválido no índice da SEMA; tentando novamente sem verificação (confie antes de usar).')
+                return fetch_laudo_index(limit=limit, timeout=timeout, insecure=True, max_retries=max_retries)
+            print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
+            if attempt == max_retries - 1:
+                return []
+            time.sleep(2 ** attempt)  # Exponential backoff
+        except requests.RequestException as e:
+            print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL} (tentativa {attempt + 1}/{max_retries}): {e}')
+            if attempt == max_retries - 1:
+                print(f'ERROR: Falha final após {max_retries} tentativas. Verifique conectividade com {LAUDOS_URL}')
+                return []
+            time.sleep(2 ** attempt)  # Exponential backoff
+    else:
         return []
 
     items: List[Dict[str, str]] = []
@@ -170,7 +180,7 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False)
     return top
 
 
-def download_pdf(url: str, timeout: int = 60, force: bool = False, insecure: bool = False) -> str:
+def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bool = False, max_retries: int = 3) -> str:
     """Baixa um PDF para data/raw e devolve o caminho local."""
     name = re.sub(r'[^A-Za-z0-9._-]+', '_', os.path.basename(url))
     if not name.lower().endswith('.pdf'):
@@ -178,20 +188,31 @@ def download_pdf(url: str, timeout: int = 60, force: bool = False, insecure: boo
     path = os.path.join(RAW_DIR, name)
     if not force and os.path.exists(path) and os.path.getsize(path) > 0:
         return path
-    try:
-        with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers={
-            'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-        }) as r:
-            r.raise_for_status()
-            with open(path, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    if chunk:
-                        f.write(chunk)
-    except requests.exceptions.SSLError as e:
-        if not insecure:
-            print(f'WARN: SSL inválido ao baixar {url}; nova tentativa sem verificação (confira a procedência).')
-            return download_pdf(url, timeout=timeout, force=force, insecure=True)
-        raise
+    
+    for attempt in range(max_retries):
+        try:
+            with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers={
+                'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
+            }) as r:
+                r.raise_for_status()
+                with open(path, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+            return path
+        except requests.exceptions.SSLError as e:
+            if not insecure:
+                print(f'WARN: SSL inválido ao baixar {url}; nova tentativa sem verificação (confira a procedência).')
+                return download_pdf(url, timeout=timeout, force=force, insecure=True, max_retries=max_retries)
+            print(f'WARN: falha SSL ao baixar {url} (tentativa {attempt + 1}/{max_retries}): {e}')
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(2 ** attempt)  # Exponential backoff
+        except requests.RequestException as e:
+            print(f'WARN: falha ao baixar {url} (tentativa {attempt + 1}/{max_retries}): {e}')
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(2 ** attempt)  # Exponential backoff
     return path
 
 
@@ -506,7 +527,7 @@ def write_stations_index_csv(agg: Dict[str, Station], path: str):
             f.write(f'{s.code},"{b}","{r}","{c}",{lat},{lng}\n')
 
 
-def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_source_url: Optional[str] = None, refresh_raw: bool = False, insecure: Optional[bool] = None):
+def run(limit: int = 3, timeout: int = 120, from_file: Optional[str] = None, web_source_url: Optional[str] = None, refresh_raw: bool = False, insecure: Optional[bool] = None):
     ensure_dirs()
     items: List[Dict[str, str]] = []
     if from_file:
@@ -551,6 +572,11 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
 
     if not all_rows:
         print('Aviso: nenhuma linha extraída dos PDFs. Verifique regex/layout.')
+        print('Possíveis causas:')
+        print('  - Problemas de conectividade com o servidor da SEMA')
+        print('  - PDFs com formato diferente do esperado')
+        print('  - Mudanças na estrutura do site da SEMA')
+        print('  - Restrições de acesso ou firewall')
 
     # Consolida por ponto
     # Se veio de arquivo local, preferir a URL web informada
@@ -610,7 +636,7 @@ def run(limit: int = 3, timeout: int = 60, from_file: Optional[str] = None, web_
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='ETL de laudos de balneabilidade – SEMA/MA')
     parser.add_argument('--limit', type=int, default=5, help='Número máximo de laudos para indexar/baixar')
-    parser.add_argument('--timeout', type=int, default=60, help='Timeout de rede em segundos')
+    parser.add_argument('--timeout', type=int, default=120, help='Timeout de rede em segundos')
     parser.add_argument('--from-file', type=str, default=None, help='Caminho para PDF local (pula download)')
     parser.add_argument('--web-source-url', type=str, default=None, help='URL pública do laudo (para Fonte: SEMA/MA)')
     parser.add_argument('--refresh-raw', action='store_true', help='Força re-download dos PDFs em data/raw/')
