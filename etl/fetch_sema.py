@@ -38,8 +38,8 @@ RAW_DIR = os.path.join(DATA_DIR, 'raw')
 GEOCODES_CSV = os.path.join(DATA_DIR, 'stations_geocoded.csv')
 POINTS_JSON = os.path.join(DATA_DIR, 'points.json')
 
-LAUDOS_URL = 'https://www.sema.ma.gov.br/laudos-de-balneabilidade'
-PDF_BASE_URL = 'https://www.sema.ma.gov.br/uploads/sema/docs/'
+LAUDOS_URL = 'https://sema.ma.gov.br/laudos-de-balneabilidade'
+PDF_BASE_URL = 'https://sema.ma.gov.br/uploads/sema/docs/'
 
 
 def _insecure_ssl() -> bool:
