@@ -103,6 +103,26 @@ def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
     today = datetime.now()
     urls = []
 
+    # Adiciona datas conhecidas específicas primeiro (maior chance de sucesso)
+    known_dates = [
+        datetime(2026, 2, 2),  # Data mencionada pelo usuário
+        datetime(2026, 2, 9),  # Domingo mais recente
+        datetime(2026, 2, 6),  # Quinta mais recente
+    ]
+
+    for target_date in known_dates:
+        date_str = target_date.strftime('%d_%m_%Y')
+        pdf_name = f'Laudo_de_Balneabilidade_{date_str}.pdf'
+        url = PDF_BASE_URL + pdf_name
+        ts = int(target_date.timestamp())
+
+        urls.append({
+            'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")}',
+            'url': url,
+            'ts': ts,
+            'priority': 1  # Alta prioridade
+        })
+
     # Tenta domingos das últimas N semanas (laudos geralmente são publicados semanalmente aos domingos)
     for week in range(weeks_back):
         # Calcula o domingo mais recente e retrocede semanas
@@ -121,7 +141,8 @@ def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
         urls.append({
             'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")}',
             'url': url,
-            'ts': ts
+            'ts': ts,
+            'priority': 2
         })
 
     # Também tenta algumas quintas-feiras (caso o padrão tenha mudado)
@@ -140,14 +161,24 @@ def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
         urls.append({
             'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")} (quinta)',
             'url': url,
-            'ts': ts
+            'ts': ts,
+            'priority': 2
         })
 
-    # Ordena por data mais recente primeiro
-    urls.sort(key=lambda x: -x['ts'])
+    # Remove duplicatas mantendo a ordem
+    seen = set()
+    unique_urls = []
+    for item in urls:
+        if item['url'] not in seen:
+            seen.add(item['url'])
+            unique_urls.append(item)
 
-    print(f'Geradas {len(urls)} URLs candidatas baseadas em datas recentes')
-    return urls
+    # Ordena: primeiro por prioridade, depois por data mais recente
+    unique_urls.sort(key=lambda x: (x.get('priority', 2), -x['ts']))
+
+    print(f'Geradas {len(unique_urls)} URLs candidatas baseadas em datas recentes')
+    print(f'URLs prioritárias: {[u["url"].split("/")[-1] for u in unique_urls[:3]]}')
+    return unique_urls
 
 
 def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False, max_retries: int = 3) -> List[Dict[str, str]]:
@@ -164,15 +195,24 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False,
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Site': 'none',
         'Sec-Fetch-User': '?1',
-        'Cache-Control': 'max-age=0'
+        'Cache-Control': 'max-age=0',
+        'DNT': '1'
     }
+
+    # Cria uma sessão para manter cookies
+    session = requests.Session()
+    session.headers.update(headers)
 
     for attempt in range(max_retries):
         try:
             # Pequeno delay antes de cada tentativa para parecer mais humano
             if attempt > 0:
                 time.sleep(2 ** attempt)
-            r = requests.get(LAUDOS_URL, timeout=timeout, verify=not insecure, headers=headers)
+
+            # Aumenta timeout progressivamente
+            current_timeout = timeout * (attempt + 1)
+
+            r = session.get(LAUDOS_URL, timeout=current_timeout, verify=not insecure, allow_redirects=True)
             r.raise_for_status()
             soup = BeautifulSoup(r.text, 'html.parser')
             break
@@ -271,15 +311,24 @@ def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bo
         'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
         'Accept-Encoding': 'gzip, deflate, br',
         'Connection': 'keep-alive',
-        'Referer': LAUDOS_URL
+        'Referer': LAUDOS_URL,
+        'DNT': '1'
     }
+
+    # Cria uma sessão
+    session = requests.Session()
+    session.headers.update(headers)
 
     for attempt in range(max_retries):
         try:
             # Pequeno delay antes de cada tentativa
             if attempt > 0:
                 time.sleep(2 ** attempt)
-            with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers=headers) as r:
+
+            # Aumenta timeout progressivamente
+            current_timeout = timeout + (attempt * 30)
+
+            with session.get(url, timeout=current_timeout, stream=True, verify=not insecure, allow_redirects=True) as r:
                 # Se for 404, não vale a pena tentar novamente
                 if r.status_code == 404:
                     print(f'INFO: PDF não encontrado (404): {url}')
