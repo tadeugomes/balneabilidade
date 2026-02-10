@@ -38,7 +38,8 @@ RAW_DIR = os.path.join(DATA_DIR, 'raw')
 GEOCODES_CSV = os.path.join(DATA_DIR, 'stations_geocoded.csv')
 POINTS_JSON = os.path.join(DATA_DIR, 'points.json')
 
-LAUDOS_URL = 'https://www.sema.ma.gov.br/laudos-de-balneabilidade'
+LAUDOS_URL = 'https://sema.ma.gov.br/laudos-de-balneabilidade'
+PDF_BASE_URL = 'https://sema.ma.gov.br/uploads/sema/docs/'
 
 
 def _insecure_ssl() -> bool:
@@ -91,13 +92,127 @@ def _parse_date_any(s: str) -> Optional[datetime]:
     return None
 
 
+def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
+    """Gera URLs de PDFs baseado em padrões conhecidos e datas recentes.
+    Útil como fallback quando o índice da SEMA está indisponível.
+
+    Retorna URLs candidatas para as últimas N semanas (padrão: 8 semanas).
+    """
+    from datetime import timedelta
+
+    today = datetime.now()
+    urls = []
+
+    # Adiciona datas conhecidas específicas primeiro (maior chance de sucesso)
+    known_dates = [
+        datetime(2026, 2, 2),  # Data mencionada pelo usuário
+        datetime(2026, 2, 9),  # Domingo mais recente
+        datetime(2026, 2, 6),  # Quinta mais recente
+    ]
+
+    for target_date in known_dates:
+        date_str = target_date.strftime('%d_%m_%Y')
+        pdf_name = f'Laudo_de_Balneabilidade_{date_str}.pdf'
+        url = PDF_BASE_URL + pdf_name
+        ts = int(target_date.timestamp())
+
+        urls.append({
+            'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")}',
+            'url': url,
+            'ts': ts,
+            'priority': 1  # Alta prioridade
+        })
+
+    # Tenta domingos das últimas N semanas (laudos geralmente são publicados semanalmente aos domingos)
+    for week in range(weeks_back):
+        # Calcula o domingo mais recente e retrocede semanas
+        days_since_sunday = (today.weekday() + 1) % 7
+        last_sunday = today - timedelta(days=days_since_sunday)
+        target_date = last_sunday - timedelta(weeks=week)
+
+        # Formato: Laudo_de_Balneabilidade_DD_MM_YYYY.pdf
+        date_str = target_date.strftime('%d_%m_%Y')
+        pdf_name = f'Laudo_de_Balneabilidade_{date_str}.pdf'
+        url = PDF_BASE_URL + pdf_name
+
+        # Timestamp para ordenação
+        ts = int(target_date.timestamp())
+
+        urls.append({
+            'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")}',
+            'url': url,
+            'ts': ts,
+            'priority': 2
+        })
+
+    # Também tenta algumas quintas-feiras (caso o padrão tenha mudado)
+    for week in range(weeks_back):
+        days_since_thursday = (today.weekday() - 3) % 7
+        if days_since_thursday < 0:
+            days_since_thursday += 7
+        last_thursday = today - timedelta(days=days_since_thursday)
+        target_date = last_thursday - timedelta(weeks=week)
+
+        date_str = target_date.strftime('%d_%m_%Y')
+        pdf_name = f'Laudo_de_Balneabilidade_{date_str}.pdf'
+        url = PDF_BASE_URL + pdf_name
+        ts = int(target_date.timestamp())
+
+        urls.append({
+            'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")} (quinta)',
+            'url': url,
+            'ts': ts,
+            'priority': 2
+        })
+
+    # Remove duplicatas mantendo a ordem
+    seen = set()
+    unique_urls = []
+    for item in urls:
+        if item['url'] not in seen:
+            seen.add(item['url'])
+            unique_urls.append(item)
+
+    # Ordena: primeiro por prioridade, depois por data mais recente
+    unique_urls.sort(key=lambda x: (x.get('priority', 2), -x['ts']))
+
+    print(f'Geradas {len(unique_urls)} URLs candidatas baseadas em datas recentes')
+    print(f'URLs prioritárias: {[u["url"].split("/")[-1] for u in unique_urls[:3]]}')
+    return unique_urls
+
+
 def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False, max_retries: int = 3) -> List[Dict[str, str]]:
     """Coleta os últimos itens de laudos do site e retorna [{title, url}]."""
+    # Headers mais realistas para contornar proteção anti-bot
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Cache-Control': 'max-age=0',
+        'DNT': '1'
+    }
+
+    # Cria uma sessão para manter cookies
+    session = requests.Session()
+    session.headers.update(headers)
+
     for attempt in range(max_retries):
         try:
-            r = requests.get(LAUDOS_URL, timeout=timeout, verify=not insecure, headers={
-                'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-            })
+            # Pequeno delay antes de cada tentativa para parecer mais humano
+            if attempt > 0:
+                time.sleep(2 ** attempt)
+
+            # Aumenta timeout progressivamente
+            current_timeout = timeout * (attempt + 1)
+
+            r = session.get(LAUDOS_URL, timeout=current_timeout, verify=not insecure, allow_redirects=True)
             r.raise_for_status()
             soup = BeautifulSoup(r.text, 'html.parser')
             break
@@ -188,17 +303,42 @@ def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bo
     path = os.path.join(RAW_DIR, name)
     if not force and os.path.exists(path) and os.path.getsize(path) > 0:
         return path
-    
+
+    # Headers realistas para download
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        'Accept': 'application/pdf,application/x-pdf,*/*',
+        'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Referer': LAUDOS_URL,
+        'DNT': '1'
+    }
+
+    # Cria uma sessão
+    session = requests.Session()
+    session.headers.update(headers)
+
     for attempt in range(max_retries):
         try:
-            with requests.get(url, timeout=timeout, stream=True, verify=not insecure, headers={
-                'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-            }) as r:
+            # Pequeno delay antes de cada tentativa
+            if attempt > 0:
+                time.sleep(2 ** attempt)
+
+            # Aumenta timeout progressivamente
+            current_timeout = timeout + (attempt * 30)
+
+            with session.get(url, timeout=current_timeout, stream=True, verify=not insecure, allow_redirects=True) as r:
+                # Se for 404, não vale a pena tentar novamente
+                if r.status_code == 404:
+                    print(f'INFO: PDF não encontrado (404): {url}')
+                    return ''  # Retorna string vazia para indicar que o PDF não existe
                 r.raise_for_status()
                 with open(path, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         if chunk:
                             f.write(chunk)
+            print(f'SUCCESS: PDF baixado: {os.path.basename(path)}')
             return path
         except requests.exceptions.SSLError as e:
             if not insecure:
@@ -209,6 +349,7 @@ def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bo
                 raise
             time.sleep(2 ** attempt)  # Exponential backoff
         except requests.RequestException as e:
+            # Se for erro HTTP 503 ou 500, pode ser temporário, então tentamos novamente
             print(f'WARN: falha ao baixar {url} (tentativa {attempt + 1}/{max_retries}): {e}')
             if attempt == max_retries - 1:
                 raise
@@ -221,10 +362,17 @@ def resolve_pdf_from_page(url: str, timeout: int = 30, insecure: bool = False) -
     Retorna o URL absoluto do PDF encontrado, priorizando caminhos que contenham
     'balneabilidade'. Caso não encontre, devolve None.
     """
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Referer': LAUDOS_URL
+    }
+
     try:
-        r = requests.get(url, timeout=timeout, verify=not insecure, headers={
-            'User-Agent': 'Mozilla/5.0 (compatible; BalneabilidadeBot/0.1; +https://github.com/)'
-        })
+        r = requests.get(url, timeout=timeout, verify=not insecure, headers=headers)
         r.raise_for_status()
     except requests.exceptions.SSLError as e:
         if not insecure:
@@ -537,8 +685,20 @@ def run(limit: int = 3, timeout: int = 120, from_file: Optional[str] = None, web
         # Define inseguro via CLI ou variável de ambiente
         insecure_flag = _insecure_ssl() if insecure is None else insecure
         items = fetch_laudo_index(limit=limit, timeout=timeout, insecure=insecure_flag)
+
+        # FALLBACK: Se o índice falhou, tenta URLs diretas baseadas em datas recentes
+        if not items:
+            print('FALLBACK: Índice indisponível. Tentando URLs diretas baseadas em padrões conhecidos...')
+            candidate_urls = generate_recent_pdf_urls(weeks_back=8)
+            items = candidate_urls[:limit * 2]  # Tenta mais URLs para compensar possíveis 404s
     all_rows: List[Dict[str, str]] = []
-    for it in items:
+    for idx, it in enumerate(items):
+        # Adiciona delay entre requisições para parecer mais humano (exceto primeira)
+        if idx > 0:
+            delay = 2.0  # 2 segundos entre cada PDF
+            print(f'Aguardando {delay}s antes da próxima requisição...')
+            time.sleep(delay)
+
         url = it['url']
         if url.startswith('file://'):
             pdf_path = url.replace('file://', '')
@@ -555,8 +715,13 @@ def run(limit: int = 3, timeout: int = 120, from_file: Optional[str] = None, web
                 print(f'INFO: sem PDF encontrado na página {url} — ignorando')
                 continue
             url = resolved
+            # Delay adicional após resolver a página
+            time.sleep(1.0)
         try:
             pdf_path = download_pdf(url, timeout=timeout, force=refresh_raw, insecure=insecure_flag)
+            # Se download_pdf retornar string vazia, significa que o PDF não existe (404)
+            if not pdf_path:
+                continue
             rows = parse_pdf_text(pdf_path)
         except requests.RequestException as e:
             print(f'WARN: falha ao baixar PDF {url}: {e}')
