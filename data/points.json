@@ -7,7 +7,7 @@
     "lat": -2.5003,
     "lng": -44.319806,
     "latest": {
-      "date": "2026-02-02",
+      "date": "2026-02-09",
       "status": "IMPRÓPRIO"
     },
     "history": [
@@ -22,9 +22,13 @@
       {
         "date": "2026-02-02",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P02",
@@ -34,8 +38,8 @@
     "lat": -2.497611,
     "lng": -44.312306,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -49,9 +53,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P03",
@@ -61,7 +69,7 @@
     "lat": -2.494306,
     "lng": -44.307806,
     "latest": {
-      "date": "2026-02-02",
+      "date": "2026-02-09",
       "status": "IMPRÓPRIO"
     },
     "history": [
@@ -76,9 +84,13 @@
       {
         "date": "2026-02-02",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P04",
@@ -88,8 +100,8 @@
     "lat": -2.486389,
     "lng": -44.302,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -103,9 +115,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P05",
@@ -115,8 +131,8 @@
     "lat": -2.486694,
     "lng": -44.292306,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -130,9 +146,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P06",
@@ -142,8 +162,8 @@
     "lat": -2.486806,
     "lng": -44.284889,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -157,9 +177,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P07",
@@ -169,8 +193,8 @@
     "lat": -2.4865,
     "lng": -44.275611,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -184,9 +208,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P08",
@@ -196,7 +224,7 @@
     "lat": -2.483306,
     "lng": -44.267194,
     "latest": {
-      "date": "2026-02-02",
+      "date": "2026-02-09",
       "status": "IMPRÓPRIO"
     },
     "history": [
@@ -211,9 +239,13 @@
       {
         "date": "2026-02-02",
         "status": "IMPRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P09",
@@ -223,8 +255,8 @@
     "lat": -2.481306,
     "lng": -44.261194,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -238,9 +270,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P10",
@@ -250,8 +286,8 @@
     "lat": -2.481583,
     "lng": -44.2535,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -265,9 +301,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P11",
@@ -277,8 +317,8 @@
     "lat": -2.4815,
     "lng": -44.238778,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -292,9 +332,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P12",
@@ -304,8 +348,8 @@
     "lat": -2.4795,
     "lng": -44.238611,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -319,9 +363,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P13",
@@ -331,8 +379,8 @@
     "lat": -2.476317,
     "lng": -44.223853,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -346,9 +394,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P14",
@@ -358,8 +410,8 @@
     "lat": -2.475,
     "lng": -44.220806,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -373,9 +425,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P15",
@@ -385,8 +441,8 @@
     "lat": -2.470389,
     "lng": -44.211611,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -400,9 +456,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P16",
@@ -412,8 +472,8 @@
     "lat": -2.468111,
     "lng": -44.206306,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -427,9 +487,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P17",
@@ -439,8 +503,8 @@
     "lat": -2.464111,
     "lng": -44.198611,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -454,9 +518,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P18",
@@ -466,8 +534,8 @@
     "lat": -2.463306,
     "lng": -44.191389,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -481,9 +549,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P19",
@@ -493,7 +565,7 @@
     "lat": -2.459306,
     "lng": -44.175611,
     "latest": {
-      "date": "2026-02-02",
+      "date": "2026-02-09",
       "status": "PRÓPRIO"
     },
     "history": [
@@ -508,9 +580,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "PRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P20",
@@ -520,7 +596,7 @@
     "lat": -2.459306,
     "lng": -44.175611,
     "latest": {
-      "date": "2026-02-02",
+      "date": "2026-02-09",
       "status": "PRÓPRIO"
     },
     "history": [
@@ -535,9 +611,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "PRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P21",
@@ -547,8 +627,8 @@
     "lat": -2.456306,
     "lng": -44.172833,
     "latest": {
-      "date": "2026-02-02",
-      "status": "PRÓPRIO"
+      "date": "2026-02-09",
+      "status": "IMPRÓPRIO"
     },
     "history": [
       {
@@ -562,9 +642,13 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "IMPRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   },
   {
     "code": "P22",
@@ -574,7 +658,7 @@
     "lat": -2.450111,
     "lng": -44.163111,
     "latest": {
-      "date": "2026-02-02",
+      "date": "2026-02-09",
       "status": "PRÓPRIO"
     },
     "history": [
@@ -589,8 +673,12 @@
       {
         "date": "2026-02-02",
         "status": "PRÓPRIO"
+      },
+      {
+        "date": "2026-02-09",
+        "status": "PRÓPRIO"
       }
     ],
-    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/Laudo_de_Balneabilidade_02_02_2026.pdf"
+    "source_laudo": "https://sema.ma.gov.br/uploads/sema/docs/laudo_de_balneabilidade_09_02_2026.pdf"
   }
 ]
