@@ -1,23 +1,23 @@
 code,beach,reference,city,lat,lng
-P01,"Praia Ponta d’Areia","Ao lado do Espigão Ponta D’Areia","São Luís",-2.5003,-44.319806
-P02,"Praia Ponta d’Areia","Em frente à rampa, lado do Praia Mar Hotel","São Luís",-2.497611,-44.312306
-P03,"Praça do Sol","Centro de Atendimento ao Banhista","São Luís",-2.494306,-44.307806
-P04,"Praia Ponta do Farol","Em frente ao Farol e Forte de São Marcos","São Luís",-2.486389,-44.302
-P05,"Praia de São Marcos","Praça do Pescador / Barraca do Chef","São Luís",-2.486694,-44.292306
-P06,"Praia de São Marcos","Posto Guarda Vidas – Bombeiros","São Luís",-2.486806,-44.284889
-P07,"Praia de São Marcos","Prédio verde com heliporto","São Luís",-2.4865,-44.275611
-P08,"Praia de São Marcos","Banca de Jornal – Praça de Alimentação","São Luís",-2.483306,-44.267194
-P09,"Praia do Calhau","Estação Elevatória de Esgoto 2.2 / CAEMA","São Luís",-2.481306,-44.261194
-P10,"Praia do Calhau","Rua Altamira / Pousada Vela Mar","São Luís",-2.481583,-44.2535
-P11,"Praia do Calhau","Av. Copacabana / Pousada Suíça","São Luís",-2.4815,-44.238778
-P12,"Praia do Olho d’Água","Rua São Geraldo","São Luís",-2.4795,-44.238611
-P13,"Praia do Olho d’Água","Elevatória Iemanjá II","São Luís",-2.476317,-44.223853
-P14,"Praia do Olho d’Água","Casa com pirâmides no teto","São Luís",-2.475,-44.220806
-P15,"Praia do Meio","Próximo ao Kacthus Bar e Restaurante","São José de Ribamar",-2.470389,-44.211611
-P16,"Praia do Meio","Bar e Restaurante Capiau 2","São José de Ribamar",-2.468111,-44.206306
-P17,"Praia do Araçagy","Rampa principal de acesso à praia","São José de Ribamar",-2.464111,-44.198611
-P18,"Praia do Araçagy","Bar da Atalaia","São José de Ribamar",-2.463306,-44.191389
-P19,"Praia do Araçagy","Bar e Restaurante Rainha","Paço do Lumiar",-2.459306,-44.175611
-P20,"Praia Olho de Porco","Las Vegas Bar e Restaurante","Paço do Lumiar",-2.459306,-44.175611
-P21,"Praia Olho de Porco","Última barraca antes da foz do igarapé","Raposa",-2.456306,-44.172833
-P22,"Praia do Mangue Seco","Biblioteca do Caranguejo / Barracas Val e Pedro","Raposa",-2.450111,-44.163111
+P01,Praia Ponta d?Areia,Ao lado do Espig?o Ponta D? Areia,S?o Lu?s,-2.5003,-44.31980556
+P02,Praia Ponta d?Areia,"Em frente ? rampa de acesso ? praia, lado direito do Praia Mar hotel.",S?o Lu?s,-2.49761111,-44.31230556
+P03,Praia do Calhau,Em frente ao Centro de Atendimento ao Banhista na Pra?a do Sol,S?o Lu?s,-2.49430556,-44.30780556
+P04,Praia Ponta do Farol,Em frente ao Farol e Forte de S?o Marcos,S?o Lu?s,-2.48638889,-44.302
+P05,Praia de S?o Marcos,"Em frente Pra?a do Pescador, pr?ximo a Barraca do Chef",S?o Lu?s,-2.48669444,-44.29230556
+P06,Praia de S?o Marcos,Em frente ao Posto Guarda Vidas - Bombeiros,S?o Lu?s,-2.48680556,-44.28488889
+P07,Praia de S?o Marcos,Em frente ao pr?dio verde com o Heliporto,S?o Lu?s,-2.4865,-44.27561111
+P08,Praia de S?o Marcos,Em frente ? Banca de Jornal da Pra?a de alimenta??o da Litor?nea,S?o Lu?s,-2.48330556,-44.26719444
+P09,Praia do Calhau,Em frente ? Esta??o Elevat?ria de Esgoto 2.2 (E.E.E 2.2) da CAEMA e C?rculo Militar,S?o Lu?s,-2.48130556,-44.26119444
+P10,Praia do Calhau,"Em frente ? descida da Rua Altamira, proximidades da Pousada Vela Mar",S?o Lu?s,-2.48158333,-44.2535
+P11,Praia do Calhau,Em frente ? descida da Avenida Copacabana e Pousada Su??a,S?o Lu?s,-2.4815,-44.23877778
+P12,Praia do Olho d??gua,Em frente ? descida da rua S?o Geraldo,S?o Lu?s,-2.4795,-44.23861111
+P13,Praia do Olho d??gua,? direita da Elevat?ria Iemanj? II,S?o Lu?s,-2.47631667,-44.22385278
+P14,Praia do Olho d??gua,"Em frente ? casa com pir?mides no teto, antes da fal?sia",S?o Lu?s,-2.475,-44.22080556
+P15,Praia do Meio,Pr?ximo ao Kacthus Bar e Restaurante,S?o Jos? de Ribamar,-2.47038889,-44.21161111
+P16,Praia do Meio,Pr?ximo ao Bar e Restaurante Capiau 2,S?o Jos? de Ribamar,-2.46811111,-44.20630556
+P17,Praia do Ara?agy,Em frente ? rampa principal de acesso ? praia,S?o Jos? de Ribamar,-2.46411111,-44.19861111
+P18,Praia do Ara?agy,Em frente ao Bar da Atalaia,S?o Jos? de Ribamar,-2.46330556,-44.19138889
+P19,Praia do Ara?agy,Em frente ao Bar e Restaurante Rainha,Pa?o do Lumiar,-2.45930556,-44.17561111
+P20,Praia Olho de Porco,Em frente ao Las Vegas Bar e Restaurante,Pa?o do Lumiar,-2.45930556,-44.17561111
+P21,Praia Olho de Porco,?ltima Barraca antes da foz do igarap? do Mangue seco/Olho de Porco,Raposa,-2.45630556,-44.17283333
+P22,Praia do Mangue Seco,Em frente ? Biblioteca do Caranguejo pr?ximo as Barracas da Val e do Sr. Pedro,Raposa,-2.45011111,-44.16311111

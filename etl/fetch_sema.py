@@ -1,4 +1,4 @@
-"""
+﻿"""
 ETL: Laudos de Balneabilidade – SEMA/MA (esqueleto)
 
 Fluxo:
@@ -92,6 +92,23 @@ def _parse_date_any(s: str) -> Optional[datetime]:
     return None
 
 
+def _safe_timestamp(dt: Optional[datetime], default: int = 0) -> int:
+    """Converte datetime para timestamp de forma segura no Windows."""
+    if dt is None:
+        return default
+    try:
+        return int(dt.timestamp())
+    except (OSError, ValueError, OverflowError):
+        try:
+            return int(time.mktime(dt.timetuple()))
+        except (OSError, ValueError, OverflowError):
+            return default
+
+
+def _calc_delay(attempt: int, base: float = 2.0, jitter: float = 0.3) -> float:
+    return base * (2 ** attempt) + (attempt * jitter)
+
+
 def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
     """Gera URLs de PDFs baseado em padrões conhecidos e datas recentes.
     Útil como fallback quando o índice da SEMA está indisponível.
@@ -114,7 +131,7 @@ def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
         date_str = target_date.strftime('%d_%m_%Y')
         pdf_name = f'Laudo_de_Balneabilidade_{date_str}.pdf'
         url = PDF_BASE_URL + pdf_name
-        ts = int(target_date.timestamp())
+        ts = _safe_timestamp(target_date)
 
         urls.append({
             'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")}',
@@ -136,7 +153,7 @@ def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
         url = PDF_BASE_URL + pdf_name
 
         # Timestamp para ordenação
-        ts = int(target_date.timestamp())
+        ts = _safe_timestamp(target_date)
 
         urls.append({
             'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")}',
@@ -156,7 +173,7 @@ def generate_recent_pdf_urls(weeks_back: int = 8) -> List[Dict[str, str]]:
         date_str = target_date.strftime('%d_%m_%Y')
         pdf_name = f'Laudo_de_Balneabilidade_{date_str}.pdf'
         url = PDF_BASE_URL + pdf_name
-        ts = int(target_date.timestamp())
+        ts = _safe_timestamp(target_date)
 
         urls.append({
             'title': f'Laudo de Balneabilidade {target_date.strftime("%d/%m/%Y")} (quinta)',
@@ -207,29 +224,37 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False,
         try:
             # Pequeno delay antes de cada tentativa para parecer mais humano
             if attempt > 0:
-                time.sleep(2 ** attempt)
+                time.sleep(_calc_delay(attempt))
 
             # Aumenta timeout progressivamente
             current_timeout = timeout * (attempt + 1)
+            request_timeout = (8, current_timeout)
 
-            r = session.get(LAUDOS_URL, timeout=current_timeout, verify=not insecure, allow_redirects=True)
+            r = session.get(LAUDOS_URL, timeout=request_timeout, verify=not insecure, allow_redirects=True)
             r.raise_for_status()
             soup = BeautifulSoup(r.text, 'html.parser')
             break
+        except requests.exceptions.Timeout as e:
+            print(f'WARN: timeout ao acessar índice de laudos em {LAUDOS_URL} (tentativa {attempt + 1}/{max_retries}): {e}')
+            if attempt == max_retries - 1:
+                print(f'ERROR: Falha final após {max_retries} tentativas. Verifique conectividade com {LAUDOS_URL}')
+                return []
+            time.sleep(_calc_delay(attempt))
         except requests.exceptions.SSLError as e:
             if not insecure:
                 print('WARN: SSL inválido no índice da SEMA; tentando novamente sem verificação (confie antes de usar).')
                 return fetch_laudo_index(limit=limit, timeout=timeout, insecure=True, max_retries=max_retries)
             print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL}: {e}')
             if attempt == max_retries - 1:
+                print(f'ERROR: Falha final após {max_retries} tentativas. Verifique conectividade com {LAUDOS_URL}')
                 return []
-            time.sleep(2 ** attempt)  # Exponential backoff
+            time.sleep(_calc_delay(attempt))
         except requests.RequestException as e:
             print(f'WARN: falha ao acessar índice de laudos em {LAUDOS_URL} (tentativa {attempt + 1}/{max_retries}): {e}')
             if attempt == max_retries - 1:
                 print(f'ERROR: Falha final após {max_retries} tentativas. Verifique conectividade com {LAUDOS_URL}')
                 return []
-            time.sleep(2 ** attempt)  # Exponential backoff
+            time.sleep(_calc_delay(attempt))
     else:
         return []
 
@@ -264,7 +289,7 @@ def fetch_laudo_index(limit: int = 5, timeout: int = 30, insecure: bool = False,
         if looks_pdf or mentions_laudo:
             # extrai data de href, texto ou contexto (ex.: "período de ... a 15/09/2025")
             dt = _parse_date_any(href) or _parse_date_any(text) or _parse_date_any(context_text)
-            ts = int(dt.timestamp()) if dt else 0
+            ts = _safe_timestamp(dt)
             items.append({'title': text, 'url': href_abs, 'ts': ts})
 
     # Remover duplicados conservando ordem
@@ -323,12 +348,13 @@ def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bo
         try:
             # Pequeno delay antes de cada tentativa
             if attempt > 0:
-                time.sleep(2 ** attempt)
+                time.sleep(_calc_delay(attempt))
 
             # Aumenta timeout progressivamente
             current_timeout = timeout + (attempt * 30)
+            request_timeout = (10, current_timeout)
 
-            with session.get(url, timeout=current_timeout, stream=True, verify=not insecure, allow_redirects=True) as r:
+            with session.get(url, timeout=request_timeout, stream=True, verify=not insecure, allow_redirects=True) as r:
                 # Se for 404, não vale a pena tentar novamente
                 if r.status_code == 404:
                     print(f'INFO: PDF não encontrado (404): {url}')
@@ -340,6 +366,11 @@ def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bo
                             f.write(chunk)
             print(f'SUCCESS: PDF baixado: {os.path.basename(path)}')
             return path
+        except requests.exceptions.Timeout as e:
+            print(f'WARN: timeout ao baixar PDF {url} (tentativa {attempt + 1}/{max_retries}): {e}')
+            if attempt == max_retries - 1:
+                raise
+            time.sleep(_calc_delay(attempt))
         except requests.exceptions.SSLError as e:
             if not insecure:
                 print(f'WARN: SSL inválido ao baixar {url}; nova tentativa sem verificação (confira a procedência).')
@@ -347,13 +378,13 @@ def download_pdf(url: str, timeout: int = 120, force: bool = False, insecure: bo
             print(f'WARN: falha SSL ao baixar {url} (tentativa {attempt + 1}/{max_retries}): {e}')
             if attempt == max_retries - 1:
                 raise
-            time.sleep(2 ** attempt)  # Exponential backoff
+            time.sleep(_calc_delay(attempt))
         except requests.RequestException as e:
             # Se for erro HTTP 503 ou 500, pode ser temporário, então tentamos novamente
             print(f'WARN: falha ao baixar {url} (tentativa {attempt + 1}/{max_retries}): {e}')
             if attempt == max_retries - 1:
                 raise
-            time.sleep(2 ** attempt)  # Exponential backoff
+            time.sleep(_calc_delay(attempt))
     return path
 
 
@@ -808,3 +839,4 @@ if __name__ == '__main__':
     parser.add_argument('--insecure', action='store_true', default=None, help='Ignora verificação SSL (apenas testes locais)')
     args = parser.parse_args()
     run(limit=args.limit, timeout=args.timeout, from_file=args.from_file, web_source_url=args.web_source_url, refresh_raw=args.refresh_raw, insecure=args.insecure)
+
